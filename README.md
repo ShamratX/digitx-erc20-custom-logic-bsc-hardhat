@@ -84,7 +84,7 @@ After the first owner buy:
 ## Project Structure
 
 ```
-Dex-Token/
+advance-bep20-token/
   contracts/
     DigitX.sol
   scripts/
