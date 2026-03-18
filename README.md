@@ -1,6 +1,6 @@
-# Voltex (VLX)
+# DigitX (DigitX)
 
-**Voltex** is an ERC‑20/BEP‑20 style token built with **Hardhat** and **OpenZeppelin**.
+**DigitX** is an ERC‑20/BEP‑20 style token built with **Hardhat** and **OpenZeppelin**.
 
 ---
 
@@ -86,11 +86,11 @@ After the first owner buy:
 ```
 Dex-Token/
   contracts/
-    Voltex.sol
+    DigitX.sol
   scripts/
     deploy.js
   test/
-    Voltex.test.js
+    DigitX.test.js
   hardhat.config.js
   package.json
   .env
@@ -149,7 +149,7 @@ BSC_MAINNET_RPC_URL=...
 ETHERSCAN_API_KEY=...
 BSCSCAN_API_KEY=...
 
-# Constructor wallets for Voltex.sol
+# Constructor wallets for DigitX.sol
 LP_WALLET=0x...
 EXCHANGE_WALLET=0x...
 TREASURY_WALLET=0x...
