@@ -68,7 +68,7 @@ After the first owner buy:
 - `setPancakeSwapPool(address pool)` — sets the primary liquidity pool
 - `init()` — one-time initialization (sets restricted mode)
 - `setMode(uint256 mode)` — updates transfer mode (only when current mode is not NORMAL)
-- `increaseAllowance(...)` / `decreaseAllowance(...)` — safe allowance helpers
+- Standard ERC‑20: `transfer`, `approve`, `transferFrom`, `allowance`, etc. (inherited from OpenZeppelin)
 
 ---
 
@@ -90,7 +90,7 @@ advance-bep20-token/
   scripts/
     deploy.js
   test/
-    DigitX.test.js
+    test.js
   hardhat.config.js
   package.json
   .env
