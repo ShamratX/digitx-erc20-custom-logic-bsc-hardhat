@@ -36,6 +36,11 @@ const main = async () => {
         console.log(`Deployment tx Hash: ${txHash}`);
         console.log(`Total supply: ${totalSupplyFormated} DigitX`);
 
+        console.log("\nVerify Command:");
+        console.log(
+            `npx hardhat verify --network ${network.name} ${contractAddress} --constructor-args scripts/args.js`
+        );
+
     } catch (error) {
         console.error("Deployment failed:", error);
         process.exitCode = 1;

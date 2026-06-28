@@ -29,14 +29,14 @@
 
 All supply is minted in the constructor and allocated to reserve wallets.
 
-| Reserve | Purpose |
-|---|---|
-| LP Reserve | Liquidity pool creation |
-| Exchange Reserve | CEX listings / market operations |
-| Treasury Reserve | Project treasury |
-| Marketing Reserve | Marketing & promotion |
-| Team Reserve | Team allocation |
-| Development Reserve | Future development |
+| Reserve | Amount | Share | Purpose |
+|---|---|---|---|
+| LP Reserve | 200,000,000 | 20% | Liquidity pool creation |
+| Exchange Reserve | 150,000,000 | 15% | CEX listings / market operations |
+| Treasury Reserve | 150,000,000 | 15% | Project treasury |
+| Marketing Reserve | 150,000,000 | 15% | Marketing & promotion |
+| Team Reserve | 200,000,000 | 20% | Team allocation |
+| Development Reserve | 150,000,000 | 15% | Future development |
 
 ---
 
@@ -89,10 +89,12 @@ advance-bep20-token/
     DigitX.sol
   scripts/
     deploy.js
+    args.js
   test/
     test.js
   hardhat.config.js
   package.json
+  .env.example
   .env
 ```
 
@@ -103,6 +105,47 @@ advance-bep20-token/
 ```bash
 npm install
 ```
+
+---
+
+## Environment Setup
+
+Copy the example env file and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+Required variables:
+
+| Variable | Description |
+|---|---|
+| `PRIVATE_KEY` | Deployer wallet private key |
+| `ETH_SEPOLIA_RPC_URL` | Ethereum Sepolia RPC URL |
+| `ETH_MAINNET_RPC_URL` | Ethereum mainnet RPC URL |
+| `BSC_TESTNET_RPC_URL` | BSC testnet RPC URL |
+| `BSC_MAINNET_RPC_URL` | BSC mainnet RPC URL |
+| `ETHERSCAN_API_KEY` | Etherscan API key (Ethereum verification) |
+| `BSCSCAN_API_KEY` | BscScan API key (BSC verification) |
+| `LP_WALLET` | Constructor LP reserve address |
+| `EXCHANGE_WALLET` | Constructor exchange reserve address |
+| `TREASURY_WALLET` | Constructor treasury reserve address |
+| `MARKETING_WALLET` | Constructor marketing reserve address |
+| `TEAM_WALLET` | Constructor team reserve address |
+| `DEV_WALLET` | Constructor development reserve address |
+
+See [`.env.example`](.env.example) for the full template.
+
+---
+
+## Supported Networks
+
+| Network flag | Chain |
+|---|---|
+| `sepolia` | Ethereum Sepolia (11155111) |
+| `mainnet` | Ethereum mainnet (1) |
+| `bscTestnet` | BSC testnet (97) |
+| `bsc` | BSC mainnet (56) |
 
 ---
 
@@ -124,51 +167,34 @@ npx hardhat test
 
 ## Deploy
 
-Example:
+Examples:
 
 ```bash
-npx hardhat run scripts/deploy.js --network bscMainnet
+# BSC mainnet
+npx hardhat run scripts/deploy.js --network bsc
+
+# BSC testnet
+npx hardhat run scripts/deploy.js --network bscTestnet
+
+# Ethereum Sepolia
+npx hardhat run scripts/deploy.js --network sepolia
 ```
 
----
-
-## Environment Variables (`.env`)
-
-Example:
-
-```env
-PRIVATE_KEY=your_private_key
-
-# RPC URLs
-SEPOLIA_RPC_URL=...
-ETH_MAINNET_RPC_URL=...
-BSC_TESTNET_RPC_URL=...
-BSC_MAINNET_RPC_URL=...
-
-# Explorer keys
-ETHERSCAN_API_KEY=...
-BSCSCAN_API_KEY=...
-
-# Constructor wallets for DigitX.sol
-LP_WALLET=0x...
-EXCHANGE_WALLET=0x...
-TREASURY_WALLET=0x...
-MARKETING_WALLET=0x...
-TEAM_WALLET=0x...
-DEV_WALLET=0x...
-```
+After a successful deploy, the script prints the contract address, deployment tx hash, total supply, and a ready-to-run **verify command**.
 
 ---
 
 ## Verify
 
-Example:
+The deploy script outputs the exact verify command. You can also run it manually:
 
 ```bash
-npx hardhat verify --network bscMainnet DEPLOYED_CONTRACT_ADDRESS
+npx hardhat verify --network bsc DEPLOYED_CONTRACT_ADDRESS --constructor-args scripts/args.js
 ```
 
-(If your constructor has parameters, you must pass the same constructor arguments used at deploy time.)
+`scripts/args.js` reads the same six reserve wallet addresses from `.env` that were used at deploy time.
+
+For BSC verification, set `BSCSCAN_API_KEY` in `.env` and use the BscScan API key in `hardhat.config.js` when deploying to BNB Chain.
 
 ---
 
@@ -176,9 +202,10 @@ npx hardhat verify --network bscMainnet DEPLOYED_CONTRACT_ADDRESS
 
 - First‑buy protection reduces launch sniping risk
 - Fixed supply prevents inflation
+- Constructor reserve wallets must be non-zero addresses
 
 ---
 
 ## License
 
-MIT`
+MIT

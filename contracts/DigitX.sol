@@ -53,7 +53,6 @@ contract DigitX is ERC20, Ownable {
         _mint(_developmentReserve, developmentReserve);
     }
 
-
     function setPancakeSwapPool(address _pancakeSwapPool) external onlyOwner {
         require(_pancakeSwapPool != address(0), "Pool address cannot be zero");
         pancakeSwapPool = _pancakeSwapPool;
@@ -63,18 +62,6 @@ contract DigitX is ERC20, Ownable {
         require(!_initialized, "Token: already initialized");
         _initialized = true;
         _mode = MODE_TRANSFER_RESTRICTED;
-    }
-
-    function increaseAllowance(address spender, uint256 addedValue) public returns (bool) {
-        _approve(_msgSender(), spender, allowance(_msgSender(), spender) + addedValue);
-        return true;
-    }
-
-    function decreaseAllowance(address spender, uint256 subtractedValue) public returns (bool) {
-        uint256 currentAllowance = allowance(_msgSender(), spender);
-        require(currentAllowance >= subtractedValue, "BEP-20: decreased allowance below zero");
-        _approve(_msgSender(), spender, currentAllowance - subtractedValue);
-        return true;
     }
 
     function _update(address from, address to, uint256 value) internal virtual override {
